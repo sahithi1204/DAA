@@ -1,0 +1,50 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define MAX_ITEMS 100
+#define MAX_BINS 100
+int compare(const void *a, const void *b) {
+return (*(int*)b - *(int*)a); // Sort in descending order
+}
+void containerLoader(int items[], int n, int binCapacity) {
+int bins[MAX_BINS];
+int binCount = 0;
+int i, j;
+for (i = 0; i < MAX_BINS; i++) {
+bins[i] = 0;
+}
+qsort(items, n, sizeof(int), compare);
+for (i = 0; i < n; i++) {
+int item = items[i];
+int placed = 0;
+for (j = 0; j < binCount; j++) {
+if (bins[j] + item <= binCapacity) {
+bins[j] += item;
+placed = 1;
+break;
+}
+}
+if (!placed) {
+bins[binCount] = item;
+binCount++;
+}
+}
+printf("Number of bins used: %d\n", binCount);
+for (i = 0; i < binCount; i++) {
+printf("Bin %d: %d\n", i + 1, bins[i]);
+}
+}
+int main() {
+int items[MAX_ITEMS];
+int i,j;
+int n, binCapacity;
+printf("Enter the number of items: ");
+scanf("%d", &n);
+printf("Enter the items:\n");
+for (i = 0; i < n; i++) {
+scanf("%d", &items[i]);
+}
+printf("Enter the bin capacity: ");
+scanf("%d", &binCapacity);
+containerLoader(items, n, binCapacity);
+return 0;
+}
