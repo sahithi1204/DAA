@@ -1,0 +1,45 @@
+#include <stdio.h>
+#define MAX 100 
+void insertNumber(int list[], int *size, int number, int position) {
+int i;
+if (position < 0 || position > *size) {
+printf("Invalid position!\n");
+return;
+}
+if (*size >= MAX) {
+printf("List is full!\n");
+return;
+}
+for ( i = *size; i > position; i--) {
+list[i] = list[i - 1];
+}
+list[position] = number;
+(*size)++;
+}
+void printList(int list[], int size) {
+int i;
+printf("List elements are:\n");
+for ( i = 0; i < size; i++) {
+printf("%d ", list[i]);
+}
+printf("\n");
+}
+int main() {
+int list[MAX];
+int i;
+int size = 0; 
+int number, position;
+printf("Enter the number of initial elements in the list: ");
+scanf("%d", &size);
+printf("Enter the elements of the list:\n");
+for ( i = 0; i < size; i++) {
+scanf("%d", &list[i]);
+}
+printf("Enter the number to insert: ");
+scanf("%d", &number);
+printf("Enter the position to insert the number at (0-based index): ");
+scanf("%d", &position);
+insertNumber(list, &size, number, position);
+printList(list, size);
+return 0;
+}
